@@ -1,3 +1,4 @@
+import 'package:blog_club7/carousel/carousel_slider.dart';
 import 'package:blog_club7/constants.dart';
 import 'package:blog_club7/data.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme: TextTheme(
           headline6: TextStyle(
+            fontSize: 18,
             fontFamily: defFontFamily,
             fontWeight: FontWeight.bold,
             color: primaryTextColor,
@@ -89,10 +91,120 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             StoryList(stories: stories, themeData: themeData),
+            SizedBox(height: 16),
+            CategoryList(),
           ],
         ),
       ),
     ));
+  }
+}
+
+class CategoryList extends StatelessWidget {
+  const CategoryList({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final categories = AppDatabase.categories;
+    return CarouselSlider.builder(
+      itemCount: categories.length,
+      itemBuilder: (context, index, realIndex) {
+        return CategoryItem(
+          left: realIndex == 0 ? 32 : 8,
+          right: realIndex == categories.length - 1 ? 32 : 8,
+          category: categories[realIndex],
+        );
+      },
+      options: CarouselOptions(
+        scrollPhysics: BouncingScrollPhysics(),
+        initialPage: 0,
+        enlargeStrategy: CenterPageEnlargeStrategy.height,
+        viewportFraction: 0.8,
+        enableInfiniteScroll: false,
+        aspectRatio: 1.2,
+        disableCenter: true,
+        enlargeCenterPage: true,
+        scrollDirection: Axis.horizontal,
+      ),
+    );
+  }
+}
+
+class CategoryItem extends StatelessWidget {
+  final Category category;
+  final double left, right;
+  const CategoryItem({
+    Key? key,
+    required this.category,
+    required this.left,
+    required this.right,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(left, 0, right, 0),
+      child: Stack(
+        children: [
+          Positioned.fill(
+            left: 65,
+            right: 65,
+            top: 100,
+            bottom: 24,
+            child: Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0xff0d253c),
+                    blurRadius: 20,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Positioned.fill(
+            child: Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 16),
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(32),
+              ),
+              foregroundDecoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(32),
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.center,
+                  colors: [
+                    firstCaruselGradientColor,
+                    secondCaruselGradientColor,
+                  ],
+                ),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(32),
+                child: Image.asset(
+                  'assets/img/posts/large/${category.imageFileName}',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 48,
+            left: 32,
+            child: Text(
+              category.title,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6!
+                  .apply(color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
