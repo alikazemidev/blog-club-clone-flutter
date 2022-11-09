@@ -27,6 +27,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        colorScheme: ColorScheme.light(
+          primary: firstGradientColor,
+          onPrimary: Colors.white,
+          onSurface: primaryTextColor,
+          onBackground: primaryTextColor,
+          background: Color(0xfffbfcff),
+          surface: Colors.white,
+        ),
         textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
             textStyle: MaterialStateProperty.all(
