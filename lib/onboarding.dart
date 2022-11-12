@@ -1,3 +1,4 @@
+import 'package:blog_club7/auth.dart';
 import 'package:blog_club7/data.dart';
 import 'package:blog_club7/gen/assets.gen.dart';
 import 'package:blog_club7/home_scree.dart';
@@ -117,7 +118,7 @@ class _OboardingScreenState extends State<OboardingScreen> {
                             if (page == items.length - 1) {
                               Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                  builder: (context) => HomePage(),
+                                  builder: (context) => AuthSCreen(),
                                 ),
                               );
                             } else {

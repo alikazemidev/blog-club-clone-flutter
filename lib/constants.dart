@@ -10,3 +10,5 @@ var thirdGradientColor = Color(0xff9cecfb);
 // gradient colors
 var firstCaruselGradientColor = Color(0xff0d253c);
 var secondCaruselGradientColor = Colors.transparent;
+
+
