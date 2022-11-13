@@ -1,3 +1,4 @@
+import 'package:blog_club7/article_screen.dart';
 import 'package:blog_club7/carousel/carousel_slider.dart';
 import 'package:blog_club7/constants.dart';
 import 'package:blog_club7/data.dart';
@@ -27,8 +28,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        snackBarTheme: SnackBarThemeData(
+          backgroundColor: primaryColor,
+        ),
+        appBarTheme: AppBarTheme(
+          titleSpacing: 32,
+          backgroundColor: Colors.white,
+          foregroundColor: primaryTextColor,
+          elevation: 0,
+        ),
         colorScheme: ColorScheme.light(
-          primary: firstGradientColor,
+          primary: primaryColor,
           onPrimary: Colors.white,
           onSurface: primaryTextColor,
           onBackground: primaryTextColor,
@@ -103,7 +113,7 @@ class MyApp extends StatelessWidget {
       //     ),
       //   ],
       // ),
-      home: SplashScreen(),
+      home: ArticleScreen(),
     );
   }
 }
@@ -169,7 +179,7 @@ class BottomNavigation extends StatelessWidget {
                 height: 65,
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.white, width: 4),
-                  color: firstGradientColor,
+                  color: primaryColor,
                   borderRadius: BorderRadius.circular(32.5),
                 ),
                 child: Image.asset('assets/img/icons/plus.png'),

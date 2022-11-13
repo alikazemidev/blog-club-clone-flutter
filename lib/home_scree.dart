@@ -243,7 +243,7 @@ class Story extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            firstGradientColor,
+            primaryColor,
             secondaryTextColor,
             thirdGradientColor,
           ],
@@ -377,7 +377,7 @@ class PostListItem extends StatelessWidget {
                     post.caption,
                     style: TextStyle(
                       fontFamily: FontFamily.avenir,
-                      color: firstGradientColor,
+                      color: primaryColor,
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
