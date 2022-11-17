@@ -364,6 +364,7 @@ class PostListItem extends StatelessWidget {
             child: Image.asset(
               'assets/img/posts/small/${post.imageFileName}',
               fit: BoxFit.cover,
+              width: 120,
             ),
           ),
           Expanded(

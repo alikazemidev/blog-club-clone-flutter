@@ -4,6 +4,7 @@ import 'package:blog_club7/constants.dart';
 import 'package:blog_club7/data.dart';
 import 'package:blog_club7/gen/assets.gen.dart';
 import 'package:blog_club7/gen/fonts.gen.dart';
+import 'package:blog_club7/profile_screen.dart';
 import 'package:blog_club7/splash_screen.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
@@ -58,6 +59,10 @@ class MyApp extends StatelessWidget {
           ),
         ),
         textTheme: TextTheme(
+          bodyText1: TextStyle(
+            fontSize: 14,
+            color: primaryTextColor,      
+          ),
           caption: TextStyle(
             fontFamily: FontFamily.avenir,
             fontWeight: FontWeight.w700,
@@ -113,7 +118,7 @@ class MyApp extends StatelessWidget {
       //     ),
       //   ],
       // ),
-      home: ArticleScreen(),
+      home: ProfileScreen(),
     );
   }
 }

@@ -179,7 +179,6 @@ class ArticleScreen extends StatelessWidget {
               ),
             ),
           ),
-          // SliverPadding(padding: EdgeInsets.only(bottom: 220))
         ],
       ),
     );
