@@ -245,11 +245,11 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         IconButton(
                           onPressed: () {},
-                          icon: Assets.img.icons.home.image(),
+                          icon: Assets.img.icons.grid.svg(),
                         ),
                         IconButton(
                           onPressed: () {},
-                          icon: Assets.img.icons.home.image(),
+                          icon: Assets.img.icons.table.svg(),
                         ),
                       ],
                     ),
