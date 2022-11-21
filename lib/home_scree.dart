@@ -1,3 +1,4 @@
+import 'package:blog_club7/article_screen.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -345,96 +346,108 @@ class PostListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(32, 8, 32, 8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 10,
-            color: Color(0xff5282ff).withOpacity(0.09),
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ArticleScreen(),
           ),
-        ],
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: Image.asset(
-              'assets/img/posts/small/${post.imageFileName}',
-              fit: BoxFit.cover,
-              width: 120,
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.fromLTRB(32, 8, 32, 8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 10,
+              color: Color(0xff5282ff).withOpacity(0.09),
             ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    post.caption,
-                    style: TextStyle(
-                      fontFamily: FontFamily.avenir,
-                      color: primaryColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    post.title,
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                  SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Icon(
-                            CupertinoIcons.hand_thumbsup,
-                            size: 16,
-                            color: Theme.of(context).textTheme.bodyText2!.color,
-                          ),
-                          SizedBox(width: 4),
-                          Text(post.likes)
-                        ],
-                      ),
-                      SizedBox(width: 16),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Icon(
-                            color: Theme.of(context).textTheme.bodyText2!.color,
-                            CupertinoIcons.clock,
-                            size: 16,
-                          ),
-                          SizedBox(width: 4),
-                          Text(post.time)
-                        ],
-                      ),
-                      Expanded(
-                        child: Container(
-                          alignment: Alignment.centerRight,
-                          child: Icon(
-                            color: Theme.of(context).textTheme.bodyText2!.color,
-                            post.isBookmarked
-                                ? CupertinoIcons.bookmark_fill
-                                : CupertinoIcons.bookmark,
-                            size: 16,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+          ],
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Image.asset(
+                'assets/img/posts/small/${post.imageFileName}',
+                fit: BoxFit.cover,
+                width: 120,
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      post.caption,
+                      style: TextStyle(
+                        fontFamily: FontFamily.avenir,
+                        color: primaryColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      post.title,
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
+                    SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Icon(
+                              CupertinoIcons.hand_thumbsup,
+                              size: 16,
+                              color:
+                                  Theme.of(context).textTheme.bodyText2!.color,
+                            ),
+                            SizedBox(width: 4),
+                            Text(post.likes)
+                          ],
+                        ),
+                        SizedBox(width: 16),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Icon(
+                              color:
+                                  Theme.of(context).textTheme.bodyText2!.color,
+                              CupertinoIcons.clock,
+                              size: 16,
+                            ),
+                            SizedBox(width: 4),
+                            Text(post.time)
+                          ],
+                        ),
+                        Expanded(
+                          child: Container(
+                            alignment: Alignment.centerRight,
+                            child: Icon(
+                              color:
+                                  Theme.of(context).textTheme.bodyText2!.color,
+                              post.isBookmarked
+                                  ? CupertinoIcons.bookmark_fill
+                                  : CupertinoIcons.bookmark,
+                              size: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

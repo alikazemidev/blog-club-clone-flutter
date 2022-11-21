@@ -10,3 +10,12 @@ var thirdGradientColor = Color(0xff9cecfb);
 // gradient colors
 var firstCaruselGradientColor = Color(0xff0d253c);
 var secondCaruselGradientColor = Colors.transparent;
+
+// double const
+const double bottomNavHeight = 65;    
+
+// screen index
+const int homeIndex = 0;
+const int articleIndex = 1;
+const int searchIndex = 2;
+const int profileIndex = 3;

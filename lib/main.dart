@@ -4,6 +4,7 @@ import 'package:blog_club7/constants.dart';
 import 'package:blog_club7/data.dart';
 import 'package:blog_club7/gen/assets.gen.dart';
 import 'package:blog_club7/gen/fonts.gen.dart';
+import 'package:blog_club7/home_scree.dart';
 import 'package:blog_club7/profile_screen.dart';
 import 'package:blog_club7/splash_screen.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -61,7 +62,7 @@ class MyApp extends StatelessWidget {
         textTheme: TextTheme(
           bodyText1: TextStyle(
             fontSize: 14,
-            color: primaryTextColor,      
+            color: primaryTextColor,
           ),
           caption: TextStyle(
             fontFamily: FontFamily.avenir,
@@ -118,12 +119,140 @@ class MyApp extends StatelessWidget {
       //     ),
       //   ],
       // ),
-      home: ProfileScreen(),
+      home: MainScreen(),
+    );
+  }
+}
+
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  int selectedScreenIndex = homeIndex;
+  final List<int> history = [];
+
+  GlobalKey<NavigatorState> _homeKey = GlobalKey();
+  GlobalKey<NavigatorState> _articleKey = GlobalKey();
+  GlobalKey<NavigatorState> _searchKey = GlobalKey();
+  GlobalKey<NavigatorState> _profileKey = GlobalKey();
+
+  late final map = {
+    homeIndex: _homeKey,
+    articleIndex: _articleKey,
+    searchIndex: _searchKey,
+    profileIndex: _profileKey,
+  };
+
+  Future<bool> _onWillPop() async {
+    final NavigatorState currentSelectedTabNavigatorState =
+        map[selectedScreenIndex]!.currentState!;
+    if (currentSelectedTabNavigatorState.canPop()) {
+      return false;
+    } else if (history.isNotEmpty) {
+      setState(() {
+        selectedScreenIndex = history.last;
+        history.removeLast();
+      });
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Positioned.fill(
+              bottom: bottomNavHeight,
+              child: IndexedStack(
+                index: selectedScreenIndex,
+                children: [
+                  Navigator(
+                    key: _homeKey,
+                    onGenerateRoute: (settings) {
+                      return MaterialPageRoute(
+                        builder: (context) => HomePage(),
+                      );
+                    },
+                  ),
+                  Navigator(
+                    key: _articleKey,
+                    onGenerateRoute: (settings) {
+                      return MaterialPageRoute(
+                        builder: (context) => ArticleScreen(),
+                      );
+                    },
+                  ),
+                  Navigator(
+                    key: _searchKey,
+                    onGenerateRoute: (settings) {
+                      return MaterialPageRoute(
+                        builder: (context) => SearchScreen(),
+                      );
+                    },
+                  ),
+                  Navigator(
+                    key: _profileKey,
+                    onGenerateRoute: (settings) {
+                      return MaterialPageRoute(
+                        builder: (context) => ProfileScreen(),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: BottomNavigation(
+                selectedIndex: selectedScreenIndex,
+                onTapped: (index) {
+                  setState(() {
+                    history.remove(selectedScreenIndex);
+                    history.add(selectedScreenIndex);
+                    selectedScreenIndex = index;
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SearchScreen extends StatelessWidget {
+  const SearchScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text(
+          'Search screen',
+          style: TextStyle(fontSize: 20),
+        ),
+      ),
     );
   }
 }
 
 class BottomNavigation extends StatelessWidget {
+  final Function(int index) onTapped;
+  final int selectedIndex;
+
+  BottomNavigation({required this.onTapped, required this.selectedIndex});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -135,7 +264,7 @@ class BottomNavigation extends StatelessWidget {
             left: 0,
             right: 0,
             child: Container(
-              height: 65,
+              height: bottomNavHeight,
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
@@ -150,22 +279,40 @@ class BottomNavigation extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   BottomNavigationItem(
+                    isActive: selectedIndex == homeIndex,
+                    onTapBtnNav: () {
+                      onTapped(homeIndex);
+                    },
                     icon: 'Home',
                     activeIcon: 'Home',
                     title: 'Home',
                   ),
                   BottomNavigationItem(
+                    isActive: selectedIndex == articleIndex,
+                    onTapBtnNav: () {
+                      onTapped(articleIndex);
+                    },
                     icon: 'Articles',
                     activeIcon: 'Articles',
                     title: 'Articles',
                   ),
-                  SizedBox(width: 8),
+                  Expanded(
+                    child: SizedBox(),
+                  ),
                   BottomNavigationItem(
+                    isActive: selectedIndex == searchIndex,
+                    onTapBtnNav: () {
+                      onTapped(searchIndex);
+                    },
                     icon: 'Search',
                     activeIcon: 'Search',
                     title: 'Search',
                   ),
                   BottomNavigationItem(
+                    isActive: selectedIndex == profileIndex,
+                    onTapBtnNav: () {
+                      onTapped(profileIndex);
+                    },
                     icon: 'Menu',
                     activeIcon: 'Menu',
                     title: 'Menu',
@@ -199,27 +346,53 @@ class BottomNavigation extends StatelessWidget {
 
 class BottomNavigationItem extends StatelessWidget {
   final String? icon, title, activeIcon;
+  final VoidCallback onTapBtnNav;
+  final bool isActive;
   const BottomNavigationItem({
     super.key,
     this.icon,
-    this.title,
     this.activeIcon,
+    this.title,
+    required this.onTapBtnNav,
+    required this.isActive,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset('assets/img/icons/$icon.png'),
-        SizedBox(
-          height: 4,
+    return Expanded(
+      child: InkWell(
+        onTap: onTapBtnNav,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            isActive
+                ? Container(
+                    height: 5,
+                    width: 25,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 5,
+                          color: primaryTextColor,
+                        )
+                      ],
+                      color: primaryColor,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  )
+                : SizedBox(),
+            SizedBox(height: 5),
+            Image.asset('assets/img/icons/$icon.png'),
+            SizedBox(
+              height: 4,
+            ),
+            Text(
+              title!,
+              style: Theme.of(context).textTheme.caption,
+            ),
+          ],
         ),
-        Text(
-          title!,
-          style: Theme.of(context).textTheme.caption,
-        ),
-      ],
+      ),
     );
   }
 }
